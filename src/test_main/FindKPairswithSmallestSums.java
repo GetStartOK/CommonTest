@@ -8,22 +8,45 @@ public class FindKPairswithSmallestSums {
 
     public List<int[]> kSmallestPairs(int[] nums1, int[] nums2, int k) {
     	List<int[]> res = new ArrayList<int[]>();
-    	if(nums1.length == 0 || nums2.length == 0 || k == 0)
-    		return res;
-        for(int i = 1, j = 1, m = nums1.length, n = nums2.length; i < m && j < n && res.size() < k;){
-        	int[] ii = {nums1[i - 1], nums2[j - 1]};
-        	res.add(ii);
-        	if(nums1[i - 1] + nums2[j] > nums1[i] + nums2[j - 1]){
-        		int[] is = {nums1[i], nums2[j - 1]};
-        		i ++;
-        		res.add(is);
-        	}else{
-        		int[] is = {nums1[i - 1], nums2[j]};
-        		j ++;
-        		res.add(is);
-        	}
-        }
-        return res;
+    	int[] ns1 = new int[nums1.length];
+    	int[] ns2 = new int[nums2.length];
+    	
+    	for(int i = 0; i < nums1.length && i < nums2.length && res.size() < k;){
+    		int shu = nums1[i] + nums2[i];
+    		if(ns1[i] == 0 && ns2[i] == 0){
+	    		ns1[i] = i + 1;
+	    		ns2[i] = i + 1;
+    		}
+    		int tmps = Integer.MAX_VALUE, ts = 0, tx = 0;
+    		for(int j = 0; j < i; j++){
+    			if(tmps > nums1[j] + nums2[ns1[j]]){
+    				tmps = nums1[j] + nums2[ns1[j]];
+    				ts = j;
+    				tx = ns1[j];
+    			}
+    			if(tmps > nums1[ns2[j]] + nums2[j]){
+    				tmps = nums1[ns2[j]] + nums2[j];
+    				ts = ns2[j];
+    				tx = j;
+    			}
+    		}
+    		if(shu < tmps){
+    			int[] tt  = {nums1[i], nums2[i]};
+    			res.add(tt);
+    			i++;
+    		}else{
+    			int[] tt  = {nums1[ts], nums2[tx]};
+    			res.add(tt);
+    			if(ts > tx && ts < nums1.length)
+    				ns2[tx] ++;
+    			else if(ts < tx && tx < nums2.length)
+    				ns1[ts] ++;
+    		}
+    	}
+    	if(res.size() < k){
+    		
+    	}
+    	return res;
     }
 	
 	public static void main(String[] args) {
