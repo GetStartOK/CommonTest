@@ -1,7 +1,3 @@
-/hw
-/hw2
-/hw3
-/test_main
 /CountDownLatchTest$T.class
 /CountDownLatchTest$T2.class
 /CountDownLatchTest.class
@@ -16,3 +12,7 @@
 /SingleTon2.class
 /T2.class
 /TT.class
+/hw
+/hw2
+/hw3
+/test_main
