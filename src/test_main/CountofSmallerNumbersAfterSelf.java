@@ -1,35 +1,43 @@
 package test_main;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class CountofSmallerNumbersAfterSelf {
-	
 	public List<Integer> countSmaller(int[] nums) {
-		int[] res = new int[nums.length];
-		
+		Integer[] ans = new Integer[nums.length];
+		List<Integer> extra = new ArrayList<Integer>(nums.length);
         for(int i = nums.length - 1; i >= 0; i--){
-        	findPreSmall(res, nums, i);
+        	int index = findIndex(extra, nums[i]);
+        	ans[i] = index;
+        	extra.add(index, nums[i]);
         }
-        List<Integer> rList = new ArrayList<Integer>();
-        for(int r : res){
-        	rList.add(r);
-        }
-        return rList;
+        return Arrays.asList(ans);
     }
 
-	private void findPreSmall(int[] res, int[] nums, int i) {
-		int j = i + 1;
-		while(j < nums.length && nums[i] <= nums[j])
-			j ++;
-		if(j < nums.length)
-			res[i] = res[j] + 1;
-	}
 	
 	public static void main(String[] args) {
-		int[] nums = {9,8,7,54,65,21,32,45,98,45};
-		binarySort(nums);
+		int[] nums = {5183,2271,3067,539,8939,2999,9264,737,3974,5846,-210,9278,5800,2675,6608,1133,-1,6018,9672,5179,9842,7424,-209,2988,2757,5984,1107,2644,-499,7234,7539,6525,347,5718,-742,1797,5292,976,8752,8297,1312,3385,5924,2882,6091,-282,2595,96,1906,8014,7667,5895,7283,7974,-167,7068,3946,6223,189,1589,2058,9277};
 		System.out.println(new CountofSmallerNumbersAfterSelf().countSmaller(nums));
+	}
+	
+	public int findIndex(List<Integer> sorted, int target){
+		if(sorted.size() == 0) return 0;
+		int start = 0;
+		int end = sorted.size() - 1;
+		if(target > sorted.get(end)) return end + 1;
+		if(target < sorted.get(start)) return 0;
+		
+		while(start < end){
+			int mid = start + (end - start)/2;
+			if(target > sorted.get(mid)){
+				start = mid + 1;
+			}else{
+				end = mid;
+			}
+		}
+		return end;
 	}
 	
 	 //¶þ·Ö²éÕÒ  
@@ -68,4 +76,19 @@ public class CountofSmallerNumbersAfterSelf {
             array[k]=temp;  
         }  
     }  
+}
+class Node implements Comparable<Node>{
+
+	int value;
+	int num;
+	
+	public Node(int value, int num){
+		this.value = value;
+		this.num = num;
+	}
+
+	@Override
+	public int compareTo(Node o) {
+		return o.num - this.num;
+	}
 }
