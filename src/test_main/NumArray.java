@@ -3,7 +3,6 @@ package test_main;
 public class NumArray {
 
 	private int[] ns;
-	private int maxI;
 	private int[] nums;
 	public NumArray(int[] nums) {
 		if(nums == null || nums.length <= 0)
@@ -11,13 +10,8 @@ public class NumArray {
 		this.nums = nums;
 		ns = new int[nums.length];
 		ns[0] = nums[0];
-		int maxLow = 0;
 		for(int i = 1, j = nums.length; i < j; ++i){
 			int low = lowbit(i);
-			if(maxLow < low){
-				maxLow = low;
-				maxI = i;
-			}
 			for(int k = i - low + 1; k <= i; k ++){
 				ns[i] += nums[k];
 			}
@@ -33,7 +27,8 @@ public class NumArray {
         }
         ns[i] = ns[i] - ori + val;
     	i += lowbit(i);
-        while(i <= maxI){
+    	int j = nums.length;
+        while(i < j){
         	ns[i] = ns[i] - ori + val;
         	i += lowbit(i);
         }
