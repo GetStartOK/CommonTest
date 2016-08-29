@@ -10,44 +10,21 @@ public class LexicographicalNumbers {
     		res.add(0);
     		return res;
     	}
-    	List<String> ss = new ArrayList<String>(n);
-        for(int i = 1; i < n + 1; i++){
-        	ss.add(String.valueOf(i));
-        }
-        quickSort(ss, 0, n - 1);
-        for(int i = 0, j = ss.size(); i < j; i++){
-        	res.add(Integer.parseInt(ss.get(i)));
-        }
-        return res;
+    	int m = n;
+    	while(m > 10){
+    		m /= 10;
+    	}
+    	int i = 1;
+    	int cur = 1;
+    	while(i < 10){
+    		if(cur < n){
+    			res.add(cur);
+    			cur *= 10;
+    		}else{
+    			cur /= 10;
+    		}
+    	}
     }
-    
-    private void quickSort(List<String> ss, int l, int r) {
-    	if(l >= r)
-    		return;
-    	int start = l;
-    	int end = r;
-    	//String t = ss.get(l);
-    	String tmp = ss.get(l + (r - l) / 2);
-    	//ss.set(l, tmp);
-    	//ss.set(l + (r - l) / 2, t);
-        while(l < r){
-        	for(; r > l; r--){
-        		if(aBigB(tmp, ss.get(r))){
-        			ss.set(l, ss.get(r));
-        			break;
-        		}
-        	}
-        	for(; l < r; l++){
-        		if(aBigB(ss.get(l), tmp)){
-        			ss.set(r, ss.get(l));
-        			break;
-        		}
-        	}
-        }
-        ss.set(l, tmp);
-        quickSort(ss, start, l - 1);
-        quickSort(ss, r + 1, end);
-	}
 
 	private boolean aBigB(String a, String b){
     	int i = 0;
@@ -61,7 +38,24 @@ public class LexicographicalNumbers {
     }
     
 	public static void main(String[] args) {
-		System.out.println(new LexicographicalNumbers().lexicalOrder(14959));
+		//System.out.println(new LexicographicalNumbers().lexicalOrder(14959));
+		for(int i = 0; i < 100; i++){
+			System.out.println(i+"--"+transfer(i, 3));
+		}
 	}
 
+	 public static int transfer(int n,int k){  
+	        int ans=0;  
+	        int b=1;  
+	        for (int i = 0; i < k; i++) {  
+	            if (n!=0) {  
+	                ans+=(b*(n%10+1));  
+	                b*=11;  
+	                n/=10;  
+	            }else{  
+	                ans*=11;  
+	            }  
+	        }  
+	        return ans;  
+	    }  
 }
